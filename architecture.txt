@@ -1,0 +1,57 @@
+Nodes and Flow:
+External Patients -> Front Door -> Application Gateway.
+Hospital Networks -> VPN Gateway -> Firewall.
+
+Clusters and Nesting:
+- Transit Hub VNet:
+  - Ingress Subnet contains Application Gateway.
+  - Hybrid Network Subnet contains VPN Gateway.
+  - Egress Security Subnet contains Firewall.
+
+- Clinical API Spoke VNet:
+  - Patient Portal Subnet contains App Services.
+  - FHIR Gateway Subnet contains API Management.
+
+- Core Processing Spoke VNet:
+  - Microservices Subnet contains AKS.
+  - Messaging Subnet contains Service Bus.
+  - Event Driven Subnet contains Function Apps.
+
+- Secure Data and AI Spoke VNet:
+  - Medical Imaging Subnet contains Storage Accounts.
+  - Structured Billing Subnet contains SQL Databases.
+  - NoSQL Records Subnet contains Cosmos DB.
+  - Diagnostics Subnet contains Cognitive Services.
+
+- Compliance and Platform Spoke VNet:
+  - Encryption Subnet contains Key Vault.
+  - Trusted Image Subnet contains Container Registry.
+
+- Audit and Observability (External):
+  - Application Telemetry contains App Insights.
+  - Security Audit Logs contains Log Analytics Workspace.
+
+Connections (Traffic Flow):
+Application Gateway >> App Services >> API Management.
+VPN Gateway >> Firewall >> API Management.
+
+API Management >> AKS.
+API Management >> Function Apps.
+
+AKS >> Service Bus.
+AKS >> SQL Databases.
+AKS >> Cosmos DB.
+AKS >> Key Vault.
+AKS >> Container Registry.
+
+Function Apps >> Storage Accounts.
+Function Apps >> Cognitive Services.
+Function Apps >> Cosmos DB.
+Service Bus >> Function Apps.
+
+Telemetry Connections:
+App Services >> App Insights.
+Function Apps >> App Insights.
+AKS >> Log Analytics Workspace.
+Firewall >> Log Analytics Workspace.
+API Management >> Log Analytics Workspace.
